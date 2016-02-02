@@ -1,4 +1,4 @@
-K8S_VERSION=1.1.2
+K8S_VERSION=1.1.3
 
 # Run etcd cluster as it is required to store data by kubernetes
 docker run --net=host --name=etcd-test -d gcr.io/google_containers/etcd:2.0.12 /usr/local/bin/etcd --addr=127.0.0.1:4001 --bind-addr=0.0.0.0:4001 --data-dir=/var/etcd/data
@@ -25,8 +25,15 @@ docker run \
 # Start kubernetes service proxy
 docker run -d --net=host --name=k8s-proxy --privileged gcr.io/google_containers/hyperkube:v${K8S_VERSION} /hyperkube proxy --master=http://127.0.0.1:8080 --v=2
 
-wget https://storage.googleapis.com/kubernetes-release/release/v${K8S_VERSION}/bin/linux/amd64/kubectl
-chmod +x kubectl
+# Download kubectl if required
+if [ -s "kubectl" ]
+   then
+       echo "Kubectl is already present"
+   else
+       wget https://storage.googleapis.com/kubernetes-release/release/v${K8S_VERSION}/bin/linux/amd64/kubectl
+       chmod +x kubectl
+       export PATH=$PATH:$PWD
+fi
 
 # Configure kubeconfig, so that kubectl can talk to new cluster
 kubectl config set-cluster docker-test --server=http://localhost:8080
