@@ -23,7 +23,7 @@ if [ "$1" == "start" ]; then
           --name=k8s-hyper \
           -d \
           gcr.io/google_containers/hyperkube:v${K8S_VERSION} \
-          /hyperkube kubelet --containerized --hostname-override="127.0.0.1" --address="0.0.0.0" --api-servers=http://localhost:8080 --config=/etc/kubernetes/manifests
+          /hyperkube kubelet --containerized --hostname-override="127.0.0.1" --address="0.0.0.0" --api-servers=http://localhost:8080 --cluster-dns=10.0.0.10 --allow-privileged=true --cluster-domain=cluster.local --config=/etc/kubernetes/manifests
 
    # Start kubernetes service proxy
    docker run -d --net=host --name=k8s-proxy --privileged gcr.io/google_containers/hyperkube:v${K8S_VERSION} /hyperkube proxy --master=http://127.0.0.1:8080 --v=2
