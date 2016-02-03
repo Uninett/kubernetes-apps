@@ -16,7 +16,7 @@
 
 . /start-common.sh
 
-echo "spark.master spark://{SPARK_MASTER_SERVICE_HOST:-spark-master}:${SPARK_MASTER_SERVICE_PORT:-7077}" >> /opt/spark/conf/spark-defaults.conf
+echo "spark.master spark://${SPARK_MASTER_SERVICE_HOST:-spark-master}:${SPARK_MASTER_SERVICE_PORT:-7077}" >> /opt/spark/conf/spark-defaults.conf
 
 echo "Use kubectl exec spark-driver -it bash to invoke commands"
 while true; do
