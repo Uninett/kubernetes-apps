@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: jupyterhub
-          image: jhellan/notebook-spark
+          image: gurvin/jupyterhub
           ports:
             - containerPort: 8888
           resources:
