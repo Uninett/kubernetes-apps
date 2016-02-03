@@ -19,7 +19,7 @@ spec:
             - name: PASSWORD
               value: testing
             - name: USE_HTTP
-              value: 1
+              value: "1"
           ports:
             - containerPort: 8888
           resources:
