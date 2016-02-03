@@ -9,5 +9,5 @@ spec:
       targetPort: 8888
       nodePort: 30002
   selector:
-    component: spark-master
+    component: jupyterhub
   type: NodePort
