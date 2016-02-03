@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: spark-webui
+  name: jupyterhub
   namespace: spark-project
 spec:
   ports:
-    - port: 8080
-      targetPort: 8080
-      nodePort: 30001
+    - port: 8888
+      targetPort: 8888
+      nodePort: 30002
   selector:
     component: spark-master
   type: NodePort

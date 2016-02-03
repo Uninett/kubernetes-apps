@@ -1,22 +1,22 @@
 kind: ReplicationController
 apiVersion: v1
 metadata:
-  name: spark-driver-controller
+  name: jupyterhub-controller
   namespace: spark-project
 spec:
   replicas: 1
   selector:
-    component: spark-driver
+    component: jupyterhub
   template:
     metadata:
       labels:
-        component: spark-driver
+        component: jupyterhub
     spec:
       containers:
-        - name: spark-worker
-          image: gurvin/spark-driver
+        - name: jupyterhub
+          image: jhellan/notebook-spark
           ports:
-            - containerPort: 4040
+            - containerPort: 8888
           resources:
             requests:
               cpu: 100m
