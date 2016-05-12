@@ -1,0 +1,74 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nfs-server
+spec:
+  ports:
+    - name: portmapper-tcp
+      port: 111
+      protocol: TCP
+    - name: portmapper-udp
+      port: 111
+      protocol: UDP
+    - name: nfs-tcp
+      port: 2049
+      protocol: TCP
+    - name: nfs-udp
+      port: 2049
+      protocol: UDP
+    - name: mountd-tcp
+      port: 20049
+      protocol: TCP
+    - name: mountd-udp
+      port: 20049
+      protocol: UDP
+  selector:
+    role: nfs-server
+
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nfs-server
+spec:
+  replicas: 1
+  selector:
+    role: nfs-server
+  template:
+    metadata:
+      labels:
+        role: nfs-server
+    spec:
+      containers:
+      - name: nfs-server
+        image: gurvin/nfs-server
+        ports:
+          - name: portmap-tcp
+            containerPort: 111
+            protocol: TCP
+          - name: portmap-udp
+            containerPort: 111
+            protocol: UDP
+          - name: nfs-tcp
+            containerPort: 2049
+            protocol: TCP
+          - name: nfs-udp
+            containerPort: 2049
+            protocol: UDP
+          - name: mountd-tcp
+            containerPort: 20049
+            protocol: TCP
+          - name: mountd-udp
+            containerPort: 20049
+            protocol: UDP
+        securityContext:
+          privileged: true
+        imagePullPolicy: Always
+        volumeMounts:
+            - mountPath: /exports
+              name: exports
+      volumes:
+        - name: exports
+          emptyDir: {}
+
+
