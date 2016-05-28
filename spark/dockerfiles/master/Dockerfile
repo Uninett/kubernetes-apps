@@ -1,7 +1,13 @@
 FROM gurvin/spark-base:latest
 
-ADD start.sh /
-ADD log4j.properties /opt/spark/conf/log4j.properties
-EXPOSE 7077 8080
+MAINTAINER Gurvinder Singh <gurvinder.singh@uninett.no>
 
-ENTRYPOINT ["/start.sh"]
+COPY start-master.sh /usr/local/bin/
+
+# Create Recovery directory
+ENV SPARK_RECOVERY_DIR /spark-master
+RUN mkdir -p $SPARK_RECOVERY_DIR
+
+EXPOSE 8080/tcp 7077/tcp
+
+CMD ["start-master.sh"]

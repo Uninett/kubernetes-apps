@@ -23,21 +23,19 @@ spec:
       port: 20049
       protocol: UDP
   selector:
-    role: nfs-server
+    app: nfs-server
 
 ---
-apiVersion: v1
-kind: ReplicationController
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
 metadata:
   name: nfs-server
 spec:
   replicas: 1
-  selector:
-    role: nfs-server
   template:
     metadata:
       labels:
-        role: nfs-server
+        app: nfs-server
     spec:
       containers:
       - name: nfs-server
@@ -61,6 +59,9 @@ spec:
           - name: mountd-udp
             containerPort: 20049
             protocol: UDP
+        env:
+          - name: EXPORT_DIRS
+            value: 'data data/notebooks data/spark spark-master'
         securityContext:
           privileged: true
         imagePullPolicy: Always

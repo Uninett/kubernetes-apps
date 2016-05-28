@@ -1,7 +1,9 @@
-FROM gurvin/spark-base:latest
+FROM gurvin/spark-worker-base:latest
 
-ADD start.sh /
-ADD log4j.properties /opt/spark/conf/log4j.properties
-EXPOSE 8081
+MAINTAINER Gurvinder Singh <gurvinder.singh@uninett.no>
 
-ENTRYPOINT ["/start.sh"]
+COPY start-worker.sh /usr/local/bin/
+
+EXPOSE 8081/tcp
+
+CMD ["start-worker.sh"]
