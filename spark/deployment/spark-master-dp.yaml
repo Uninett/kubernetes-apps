@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spark-master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spark-master
+    spec:
+      containers:
+        - name: spark-master
+          image: gurvin/spark-master
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7077
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 1024m
+          volumeMounts:
+            - name: spark-master
+              mountPath: /spark-master
+          env:
+            - name: SPARK_PUBLIC_DNS
+              value: 'spark.labs.uninett.no'
+        - name: oauth-proxy
+          image: gurvin/oauth-proxy
+          # imagePullPolicy: Always
+          ports:
+          - containerPort: 80
+          volumeMounts:
+            - mountPath: /oauth-proxy/config
+              name: oauth-proxy-config
+      volumes:
+        - name: spark-master
+          persistentVolumeClaim:
+            claimName: spark-master-nfs
+        - name: oauth-proxy-config
+          configMap:
+            name: spark-master-oauth-proxy
+            items:
+            - key: spark-master-oauth-proxy.json
+              path: oauth-proxy.json

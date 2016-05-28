@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: jupyter-notebook
+spec:
+  ports:
+    - name: notebook
+      port: 80
+      protocol: TCP
+  selector:
+    app: jupyter-notebook
+  type: LoadBalancer

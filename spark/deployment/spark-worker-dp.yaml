@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: spark-worker
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: spark-worker
+    spec:
+      containers:
+        - name: spark-worker
+          image: gurvin/spark-worker
+          env:
+            - name: SPARK_WORKER_MEMORY
+              value: '2g'
+            - name: SPARK_WORKER_CORES
+              value: '1'
+          ports:
+            - containerPort: 8081
+          resources:
+            requests:
+              cpu: '1024m'
+              memory: '2G'
+          volumeMounts:
+            - name: spark-worker
+              mountPath: /data
+      volumes:
+        - name: spark-worker
+          persistentVolumeClaim:
+            claimName: spark-worker-nfs

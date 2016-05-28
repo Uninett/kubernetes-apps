@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jupyter-notebook
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jupyter-notebook
+    spec:
+      containers:
+      - name: oauth-proxy
+        image: gurvin/oauth-proxy
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - mountPath: /oauth-proxy/config
+            name: oauth-proxy-config
+      - name: jupyter-notebook
+        image: gurvin/spark-jupyter-notebook
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 2048m
+        volumeMounts:
+          - name: notebooks
+            mountPath: /notebooks
+          - name: spark-worker
+            mountPath: /data
+      volumes:
+        - name: notebooks
+          persistentVolumeClaim:
+            claimName: notebooks-nfs
+        - name: spark-worker
+          persistentVolumeClaim:
+            claimName: spark-worker-nfs
+        - name: oauth-proxy-config
+          configMap:
+            name: notebook-oauth-proxy
+            items:
+            - key: notebook-oauth-proxy.json
+              path: oauth-proxy.json
