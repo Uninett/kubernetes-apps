@@ -1,0 +1,47 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: owncloud
+spec:
+  ports:
+    - name: owncloud
+      port: 80
+      protocol: TCP
+  selector:
+    app: owncloud
+  type: LoadBalancer
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: owncloud
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: owncloud
+    spec:
+      containers:
+      - name: owncloud
+        image: gurvin/owncloud-dp
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: '1024m'
+            memory: '1G'
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 80
+        #   initialDelaySeconds: 30
+        #   timeoutSeconds: 1
+        volumeMounts:
+          - name: owncloud
+            mountPath: /var/www/html/data
+      volumes:
+        - name: owncloud
+          persistentVolumeClaim:
+            claimName: owncloud-nfs

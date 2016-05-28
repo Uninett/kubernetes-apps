@@ -1,0 +1,45 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+spec:
+  ports:
+    - name: mysql
+      port: 3306
+      protocol: TCP
+  selector:
+    app: mysql
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7.12
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: glenna
+          - name: MYSQL_DATABASE
+            value: owncloud
+          - name: MYSQL_USER
+            value: owncloud
+          - name: MYSQL_PASSWORD
+            value: owncloud
+      #   volumeMounts:
+      #     - name: mysql
+      #       mountPath: /var/lib/mysql
+      # volumes:
+      #   - name: mysql
+      #     persistentVolumeClaim:
+      #       claimName: mysql-nfs
