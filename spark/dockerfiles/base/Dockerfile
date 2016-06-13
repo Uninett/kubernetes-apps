@@ -1,6 +1,6 @@
 # Debian Jessie Backports
 
-FROM debian@sha256:dcce2735994561125a989a5d13abe6b07e43c1dc6b19780b375bf9a53080ec83
+FROM debian@sha256:0d7633d9cdbb676b7c6d5f0943c7ad26e287e196e8ad019af5b50bf342b2e1e8
 
 MAINTAINER Gurvinder Singh <gurvinder.singh@uninett.no>
 

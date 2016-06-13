@@ -2,9 +2,11 @@ FROM gurvin/spark-worker-base
 
 MAINTAINER Gurvinder Singh <gurvinder.singh@uninett.no>
 
-# Install inkscape needed for LateX export
+# Install the dependencies for Notebook as mentioned in jupyter/minimal-notebook
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    inkscape \
+    inkscape git vim jed emacs libsm6 pandoc texlive-latex-base \
+    texlive-latex-extra texlive-fonts-extra nano texlive-fonts-recommended \
+    texlive-generic-recommended libxrender1 \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup Jupyter Config and notebooks directory

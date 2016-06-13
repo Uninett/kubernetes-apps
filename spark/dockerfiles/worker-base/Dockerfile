@@ -2,11 +2,8 @@ FROM gurvin/spark-base
 
 MAINTAINER Gurvinder Singh <gurvinder.singh@uninett.no>
 
-# Install the dependencies for Notebook as mentioned in jupyter/minimal-notebook
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    git vim jed emacs build-essential python-dev ca-certificates bzip2 unzip jq \
-    libsm6 pandoc texlive-latex-base texlive-latex-extra texlive-fonts-extra nano \
-    texlive-fonts-recommended texlive-generic-recommended locales libxrender1 less \
+    build-essential python-dev ca-certificates bzip2 unzip jq locales less \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
