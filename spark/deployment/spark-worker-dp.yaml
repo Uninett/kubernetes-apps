@@ -29,4 +29,4 @@ spec:
       volumes:
         - name: spark-worker
           persistentVolumeClaim:
-            claimName: spark-worker-nfs
+            claimName: spark-worker
