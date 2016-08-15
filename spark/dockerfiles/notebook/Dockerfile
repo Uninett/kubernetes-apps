@@ -16,7 +16,7 @@ COPY jupyter_notebook_config.py $NOTEBOOKS_CONFIG_DIR/
 RUN mkdir -p /notebooks
 
 # Apache Toree kernel for Spark and notebook interaction
-RUN pip install toree==0.1.0.dev7
+RUN pip install toree==0.1.0.dev8
 RUN jupyter toree install --ToreeInstall.prefix=$CONDA_DIR --ToreeInstall.toree_opts=--nosparkcontext
 
 # Set PYSPARK_HOME in the python2 spec
