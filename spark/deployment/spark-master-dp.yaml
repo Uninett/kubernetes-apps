@@ -18,7 +18,7 @@ spec:
             - containerPort: 8080
           resources:
             requests:
-              cpu: 1024m
+              cpu: 512m
           volumeMounts:
             - name: spark-master
               mountPath: /spark-master
@@ -36,7 +36,7 @@ spec:
       volumes:
         - name: spark-master
           persistentVolumeClaim:
-            claimName: spark-master-nfs
+            claimName: spark-master
         - name: oauth-proxy-config
           configMap:
             name: spark-master-oauth-proxy

@@ -19,10 +19,10 @@ spec:
             name: oauth-proxy-config
       - name: jupyter-notebook
         image: gurvin/spark-jupyter-notebook
-        imagePullPolicy: Always
         resources:
           requests:
-            cpu: 2048m
+            cpu: 512m
+            memory: 4G
         volumeMounts:
           - name: notebooks
             mountPath: /notebooks
@@ -31,10 +31,10 @@ spec:
       volumes:
         - name: notebooks
           persistentVolumeClaim:
-            claimName: notebooks-nfs
+            claimName: notebooks
         - name: spark-worker
           persistentVolumeClaim:
-            claimName: spark-worker-nfs
+            claimName: spark-worker
         - name: oauth-proxy-config
           configMap:
             name: notebook-oauth-proxy

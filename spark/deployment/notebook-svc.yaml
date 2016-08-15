@@ -9,4 +9,3 @@ spec:
       protocol: TCP
   selector:
     app: jupyter-notebook
-  type: LoadBalancer

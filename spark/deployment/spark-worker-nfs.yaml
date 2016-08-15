@@ -1,23 +1,23 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: spark-worker-nfs
+  name: spark-worker
 spec:
   capacity:
-    storage: 5Gi
+    storage: 100Gi
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.240.0.8
-    path: "/exports/data/gurvinder.singh@uninett.no/files/data"
+    server: 10.240.0.3
+    path: "/exports/data"
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: spark-worker-nfs
+  name: spark-worker
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
-      storage: 5Gi
+      storage: 100Gi

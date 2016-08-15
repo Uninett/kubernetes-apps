@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: 10.240.0.8
+    server: 10.240.0.3
     path: "/exports/spark-master"
 
 ---

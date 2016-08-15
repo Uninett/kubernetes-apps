@@ -19,4 +19,3 @@ spec:
     - port: 80
   selector:
     app: spark-master
-  type: LoadBalancer
