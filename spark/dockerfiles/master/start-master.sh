@@ -3,8 +3,8 @@
 # Strict mode
 set -euo pipefail
 
-echo "spark.deploy.recoveryMode FILESYSTEM" > $SPARK_HOME/conf/spark-defaults.conf
 echo "spark.deploy.recoveryDirectory ${SPARK_RECOVERY_DIR}" >> $SPARK_HOME/conf/spark-defaults.conf
+echo "spark.ui.reverseProxyUrl  ${SPARK_PUBLIC_DNS}" >> $SPARK_HOME/conf/spark-defaults.conf
 
 echo "SPARK_PUBLIC_DNS=${SPARK_PUBLIC_DNS}" > $SPARK_HOME/conf/spark-env.sh
 

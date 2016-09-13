@@ -31,6 +31,7 @@ ENV PATH $SPARK_HOME/bin:$PATH
 
 # Spark logging properties
 COPY log4j.properties $SPARK_HOME/conf/log4j.properties
+COPY spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
 
 # Install Tini
 RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.10.0/tini && \

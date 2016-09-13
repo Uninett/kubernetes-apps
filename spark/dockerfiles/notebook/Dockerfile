@@ -13,10 +13,15 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 ENV NOTEBOOKS_CONFIG_DIR /opt/jupyter/config
 RUN mkdir -p $NOTEBOOKS_CONFIG_DIR
 COPY jupyter_notebook_config.py $NOTEBOOKS_CONFIG_DIR/
-RUN mkdir -p /notebooks
+RUN mkdir -p /notebooks /notebooks/project
+ADD examples/ /notebooks/examples
 
-# Apache Toree kernel for Spark and notebook interaction
-RUN pip install toree==0.1.0.dev8
+# Fix JAVA Truststore issue
+RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
+
+# Apache Toree kernel for Spark and notebook interaction with Spark 2.0
+COPY toree-0.2.0.dev1.tar.gz /opt/
+RUN pip install /opt/toree-0.2.0.dev1.tar.gz
 RUN jupyter toree install --ToreeInstall.prefix=$CONDA_DIR --ToreeInstall.toree_opts=--nosparkcontext
 
 # Set PYSPARK_HOME in the python2 spec
@@ -25,6 +30,7 @@ RUN jq --arg v "$CONDA_DIR/envs/python2/bin/python" \
         $CONDA_DIR/share/jupyter/kernels/python2/kernel.json > /tmp/kernel.json && \
         mv /tmp/kernel.json $CONDA_DIR/share/jupyter/kernels/python2/kernel.json
 
+EXPOSE 8888
 # Start notebook server
 COPY start-notebook.sh /usr/local/bin/
 CMD ["start-notebook.sh"]
