@@ -15,7 +15,6 @@ RUN mkdir -p $NOTEBOOKS_CONFIG_DIR
 COPY jupyter_notebook_config.py $NOTEBOOKS_CONFIG_DIR/
 RUN mkdir -p /notebooks /notebooks/projects
 ADD examples/ /notebooks/examples
-RUN ln -s /data /notebooks/projects
 
 # Fix JAVA Truststore issue
 RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
