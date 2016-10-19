@@ -66,7 +66,5 @@ RUN conda install --yes \
     'r-randomforest=4.6*' 'r-crayon=1.3*' && \
     conda clean -tipsy
 
-# Create directory where data will be mounted on all workers
-ENV DATA_DIR /data
+# Add example datasets
 ADD datasets/ /opt/datasets
-RUN mkdir -p $DATA_DIR

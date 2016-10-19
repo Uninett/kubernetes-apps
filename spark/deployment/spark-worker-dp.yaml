@@ -12,6 +12,7 @@ spec:
       containers:
         - name: spark-worker
           image: gurvin/spark-worker
+          imagePullPolicy: Always
           env:
             - name: SPARK_WORKER_MEMORY
               value: '2g'

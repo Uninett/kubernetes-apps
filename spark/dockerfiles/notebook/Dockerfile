@@ -15,9 +15,7 @@ RUN mkdir -p $NOTEBOOKS_CONFIG_DIR
 COPY jupyter_notebook_config.py $NOTEBOOKS_CONFIG_DIR/
 RUN mkdir -p /notebooks /notebooks/projects
 ADD examples/ /notebooks/examples
-
-# Fix JAVA Truststore issue
-RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
+RUN ln -s /notebooks/projects /data
 
 # Apache Toree kernel for Spark and notebook interaction with Spark 2.0
 COPY toree-0.2.0.dev1.tar.gz /opt/
