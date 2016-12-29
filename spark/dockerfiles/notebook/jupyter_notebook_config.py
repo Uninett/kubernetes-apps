@@ -15,3 +15,5 @@ c.NotebookApp.trust_xheaders = True
 c.NotebookApp.tornado_settings = {'static_url_prefix': '/static/'}
 c.NotebookApp.notebook_dir = '/notebooks'
 c.NotebookApp.allow_origin = '*'
+c.NotebookApp.token = ''
+c.NotebookApp.password = ''
