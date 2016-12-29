@@ -71,3 +71,12 @@ RUN conda install --yes \
 
 # Add example datasets
 ADD datasets/ /opt/datasets
+
+# Add BioConda channel and install packages
+RUN conda config --add channels bioconda
+RUN conda install --yes \
+    'r-mclust=5.1*' && \
+    conda clean -tipsy
+
+# Install pepXMLTab package from bioconductor
+RUN R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("pepXMLTab")'
