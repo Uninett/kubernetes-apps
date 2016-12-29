@@ -25,14 +25,17 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
 
+# Temporary workaround for https://github.com/jupyter/docker-stacks/issues/210
+# Stick with jpeg 8 to avoid problems with R packages
+RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
 # Install Python 3 packages
 RUN conda install --yes \
-    'notebook=4.2*' 'ipywidgets=5.1*' 'pandas=0.18*' 'numexpr=2.5*' 'matplotlib=1.5*' \
+    'notebook=4.3*' 'ipywidgets=5.2*' 'pandas=0.19*' 'numexpr=2.6*' 'matplotlib=1.5*' \
     'scipy=0.17*' 'seaborn=0.7*' 'scikit-learn=0.17*' 'scikit-image=0.11*' 'sympy=1.0*' \
     'cython=0.23*' 'patsy=0.4*' 'statsmodels=0.6*' 'cloudpickle=0.1*' 'dill=0.2*' \
     'numba=0.23*' 'bokeh=0.12*' 'sqlalchemy=1.0*' 'hdf5=1.8.17' 'h5py=2.6*' 'jsonschema' \
-    'pillow' 'pip' 'jpeg=8d' \
+    'pillow' 'pip' 'jpeg=8d' 'beautifulsoup4=4.5.*' 'xlrd' \
     terminado && \
     conda clean -tipsy
 
@@ -40,11 +43,11 @@ RUN conda install --yes \
 
 # Install Python 2 packages
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
-    'notebook=4.2*' 'ipywidgets=5.1*' 'pandas=0.18*' 'numexpr=2.5*' 'matplotlib=1.5*' \
+    'notebook=4.3*' 'ipywidgets=5.2*' 'pandas=0.19*' 'numexpr=2.6*' 'matplotlib=1.5*' \
     'scipy=0.17*' 'seaborn=0.7*' 'scikit-learn=0.17*' 'scikit-image=0.11*' 'sympy=1.0*' \
     'cython=0.23*' 'patsy=0.4*' 'statsmodels=0.6*' 'cloudpickle=0.1*' 'dill=0.2*' \
     'numba=0.23*' 'bokeh=0.12*' 'sqlalchemy=1.0*' 'hdf5=1.8.17' 'h5py=2.6*' 'jsonschema' \
-    'pillow' 'pip' \
+    'pillow' 'pip' 'jpeg=8d' 'beautifulsoup4=4.5.*' 'xlrd' \
     pyzmq && \
     conda clean -tipsy
 
@@ -59,7 +62,7 @@ RUN bash -c '. activate python2 && \
 # R packages
 RUN conda config --add channels r
 RUN conda install --yes \
-    'r-base=3.3.1 1' 'r-irkernel=0.6*' 'r-plyr=1.8*' 'r-devtools=1.11*' \
+    'r-base=3.3.1 1' 'r-irkernel=0.7*' 'r-plyr=1.8*' 'r-devtools=1.11*' \
     'r-dplyr=0.4*' 'r-ggplot2=2.1*' 'r-tidyr=0.5*' 'r-shiny=0.13*' \
     'r-rmarkdown=0.9*' 'r-forecast=7.1*' 'r-stringr=1.0*' 'r-rsqlite=1.0*' \
     'r-reshape2=1.4*' 'r-nycflights13=0.2*' 'r-caret=6.0*' 'r-rcurl=1.95*' \
