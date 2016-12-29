@@ -21,7 +21,7 @@ RUN cd /tmp && \
     rm spark-2.1.0-bin-uninett.tgz
 
 # Install spark and setup corresponding ENV variables
-RUN cd /usr/local && ln -s spark-2.1.0-bin-uninet spark
+RUN cd /usr/local && ln -s spark-2.1.0-bin-uninett spark
 ENV SPARK_HOME /usr/local/spark
 ENV R_LIBS_USER $SPARK_HOME/R/lib
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip
