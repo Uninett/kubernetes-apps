@@ -1,4 +1,4 @@
-FROM gurvin/spark-worker-base:latest
+FROM gurvin/spark-worker-base:promec
 
 MAINTAINER Gurvinder Singh <gurvinder.singh@uninett.no>
 
